@@ -10,7 +10,7 @@ public class Heredity {
     static final double Pc=0.7;
     static final double Pm = 0.0001;
     static final int N = 100000;
-    static final int Age = 25;
+    static final int Age = 100;
 
     public static void main(String[] args) {
         ArrayList<Gene>  genes = new ArrayList<Gene>();
@@ -121,6 +121,7 @@ public class Heredity {
             }
             if(same) break;
         }
+        genes.get(maxInt).getGene();
         genes.get(maxInt).printTable();
     }
 
@@ -150,7 +151,7 @@ public class Heredity {
             StringBuilder gene1 = new StringBuilder(geneAge.get(0).getGene());
             StringBuilder gene2 = new StringBuilder(geneAge.get(1).getGene());
             geneAge.clear();
-            for(int i=0;i<116;i++){
+            for(int i=0;i<192;i++){
                 if(Math.random()>0.5){
                     newgene1.append(gene1.toString().charAt(i));
                     newgene2.append(gene2.toString().charAt(i));
@@ -160,11 +161,11 @@ public class Heredity {
                     newgene2.append(gene1.toString().charAt(i));
                 }
             }
-            int switchIndex = (int)Math.random()*116;
+            int switchIndex = (int)Math.random()*192;
             newgene1.append(gene1.subSequence(0,switchIndex));
-            newgene1.append(gene2.subSequence(switchIndex,116));
+            newgene1.append(gene2.subSequence(switchIndex,192));
             newgene2.append(gene2.subSequence(0,switchIndex));
-            newgene2.append(gene1.subSequence(switchIndex,116));
+            newgene2.append(gene1.subSequence(switchIndex,192));
             geneAge.add(new Gene()); geneAge.get(0).setGene(newgene1);
             geneAge.add(new Gene()); geneAge.get(1).setGene(newgene2);
         }

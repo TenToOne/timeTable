@@ -1,5 +1,6 @@
 package timetable;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -10,6 +11,7 @@ public class Gene implements  Comparable<Gene>{
     ArrayList<Integer> arrayP;
     char[][] professorTable = new char[6][9];
     char[][] stodentTable = new char[6][9];
+    int[][] timeTable = new int[6][9];
 
     public Gene(){
         arrayT = new ArrayList<Integer>();
@@ -17,7 +19,7 @@ public class Gene implements  Comparable<Gene>{
     }
     public void makeGene(){
         gene = new StringBuilder();
-        for(int i=0;i<116;i++){
+        for(int i=0;i<192;i++){
             if(Math.random()>0.5) gene.append('0');
             else gene.append('1');
         }
@@ -34,23 +36,32 @@ public class Gene implements  Comparable<Gene>{
         professorTable = new char[6][9];
         stodentTable = new char[6][9];
         boolean division = true;
-        long longT = ((Long.parseLong(gene.subSequence(0,63).toString() ,2))% 9003737871877668864l);
-//        System.out.println(longT);
+        BigInteger biT = new BigInteger("1");
+        for(int i=0;i<139;i++){
+            StringBuilder mul = new StringBuilder().append(2);
+            BigInteger biMul = new BigInteger(mul.toString());
+            biMul=biMul.pow(i);
+            if(gene.toString().charAt(i)=='1')  biT= biT.add(biMul);
+        }
+        biT=biT.mod(new BigInteger("371993326789901217467999448150835200000000"));
         int t=0;
         for(int i=36;i>=1;i--){
-            t += ((int) ((longT%i)+1));
+            StringBuilder index = new StringBuilder().append((i));
+            t+=biT.mod(new BigInteger(index.toString())).intValue();
             t%=i;
             while(t>=36||arrayT.contains(t)){
                 t++;
                 if(t==36) t=0;
             }
+//            System.out.println(biT+","+t);
             arrayT.add(t);
-            longT/=i;
+            biT=biT.divide(new BigInteger(index.toString()));
         }
 //        System.out.println(arrayT);
         for (int i : arrayT) {
             int x = (arrayT.indexOf(i)) / 6;
             int y = (arrayT.indexOf(i)) % 6;
+            timeTable[y][x]=i;
             switch (i) {
                 case 0:
                 case 1:
@@ -112,16 +123,17 @@ public class Gene implements  Comparable<Gene>{
                     break;
             }
         }
-        long longP = (Long.parseLong(gene.subSequence(63,116).toString(),2)%6402373705728000l);
+        long longP = (Long.parseLong(gene.subSequence(139,192).toString(),2)%6402373705728000l);
 //        System.out.println(longP);
         t=0;
         for(int i=18;i>=1;i--){
             t += ((int) ((longP%i)+1));
-            t%=18;
+            t%=i;
             while(t>=18||arrayP.contains(t)){
                 t++;
                 t%=18;
             }
+//            System.out.println(longP+","+t);
             arrayP.add(t);
             longP/=i;
         }
@@ -130,6 +142,7 @@ public class Gene implements  Comparable<Gene>{
         for (int i : arrayP) {
             int x = (arrayP.indexOf(i)) / 6;
             int y = (arrayP.indexOf(i)) % 6;
+            timeTable[y][x+6]=i;
             switch (i) {
                 case 0:
                 case 1:
@@ -250,8 +263,6 @@ public class Gene implements  Comparable<Gene>{
     }
 
     public void printTable(){
-        makeGene();
-        testGene();
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 9; j++) {
                 System.out.print(professorTable[i][j] + " ");
@@ -261,6 +272,12 @@ public class Gene implements  Comparable<Gene>{
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 9; j++) {
                 System.out.print(stodentTable[i][j] + " ");
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 9; j++) {
+                System.out.print(timeTable[i][j] + "\t");
             }
             System.out.println();
         }
