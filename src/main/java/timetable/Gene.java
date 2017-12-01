@@ -43,7 +43,9 @@ public class Gene implements  Comparable<Gene>{
             biMul=biMul.pow(i);
             if(gene.toString().charAt(i)=='1')  biT= biT.add(biMul);
         }
+        System.out.println(biT);
         biT=biT.mod(new BigInteger("371993326789901217467999448150835200000000"));
+        System.out.println(biT);
         int t=0;
         for(int i=36;i>=1;i--){
             StringBuilder index = new StringBuilder().append((i));
@@ -57,7 +59,7 @@ public class Gene implements  Comparable<Gene>{
             arrayT.add(t);
             biT=biT.divide(new BigInteger(index.toString()));
         }
-//        System.out.println(arrayT);
+        System.out.println(arrayT);
         for (int i : arrayT) {
             int x = (arrayT.indexOf(i)) / 6;
             int y = (arrayT.indexOf(i)) % 6;
@@ -68,63 +70,67 @@ public class Gene implements  Comparable<Gene>{
                     professorTable[y][x] = 'a';
                     break;
                 case 2:
+                    stodentTable[y][x]='3';
                 case 3:
-                    stodentTable[y][x]='4';
                 case 4:
                     professorTable[y][x] = 'b';
                     break;
                 case 5:
+                    stodentTable[y][x]='4';
+                    professorTable[y][x] = 'b';
+                    break;
                 case 6:
-                    stodentTable[y][x]='2';
                 case 7:
+                    stodentTable[y][x]='2';
+                case 8:
                     professorTable[y][x] = 'c';
                     break;
-                case 8:
-                    professorTable[y][x] = 'd';
-                    stodentTable[y][x]='4';
-                    break;
                 case 9:
-                    professorTable[y][x] = 'e';
+                    professorTable[y][x] = 'd';
                     break;
                 case 10:
-                    stodentTable[y][x]='3';
+                    professorTable[y][x] = 'e';
+                    break;
                 case 11:
+                    stodentTable[y][x]='3';
+                case 12:
                     professorTable[y][x] = 'f';
                     break;
-                case 12:
-                    stodentTable[y][x]='3';
-                    professorTable[y][x] = 'g';
-                    break;
                 case 13:
-                    stodentTable[y][x]='4';
+                    stodentTable[y][x]='3';
                     professorTable[y][x] = 'g';
                     break;
                 case 14:
+                    stodentTable[y][x]='4';
+                    professorTable[y][x] = 'g';
+                    break;
+                case 15:
                     professorTable[y][x] = 'h';
                     stodentTable[y][x]='4';
                     break;
-                case 15:
+                case 16:
                     professorTable[y][x] = 'i';
                     break;
-                case 16:
+                case 17:
                     professorTable[y][x] = 'j';
                     break;
-                case 17:
                 case 18:
                 case 19:
+                case 20:
                     professorTable[y][x] = 'l';
                     break;
-                case 20:
+                case 21:
                     professorTable[y][x] = 'm';
                     break;
-                case 21:
+                case 22:
                     professorTable[y][x] = 'n';
                     stodentTable[y][x]='3';
                     break;
             }
         }
+        System.out.println(Long.parseLong(gene.subSequence(139,192).toString(),2));
         long longP = (Long.parseLong(gene.subSequence(139,192).toString(),2)%6402373705728000l);
-//        System.out.println(longP);
+        System.out.println(longP);
         t=0;
         for(int i=18;i>=1;i--){
             t += ((int) ((longP%i)+1));
@@ -138,7 +144,7 @@ public class Gene implements  Comparable<Gene>{
             longP/=i;
         }
 //        System.out.println();
-//        System.out.println(arrayP);
+        System.out.println(arrayP);
         for (int i : arrayP) {
             int x = (arrayP.indexOf(i)) / 6;
             int y = (arrayP.indexOf(i)) % 6;
@@ -153,6 +159,7 @@ public class Gene implements  Comparable<Gene>{
                     professorTable[y][x + 6] = 'c';
                     break;
                 case 3:
+                    stodentTable[y][x+6]='4';
                 case 4:
                     professorTable[y][x + 6] = 'd';
                     break;

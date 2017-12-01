@@ -21,12 +21,14 @@ public class Heredity {
         int maxInt=0;
         int[] array = new int[Age];
         for(int i=0;i<N;i++){
+            if(i%(N/100)==0) System.out.print("i");
             genes.add(new Gene());
             genes.get(i).makeGene();
             int good=genes.get(i).testGene();
             goodness[i]=good;
             goodsum+=good;
         }
+        System.out.print("E");
 
         int zero = 0 ;
         double avg;
@@ -36,7 +38,9 @@ public class Heredity {
             if(max<i)   max=i;
             if(i==0) zero++;
         }
+        System.out.print("N");
         avg=(double)(Math.round(array[0]/N)*100)/100.0;
+        System.out.println("D");
         System.out.println("Age 0 : "+array[0] +"& Max : "+max+" | Avg : "+avg+" | Zero : "+zero);
 
         for(int a =0;a<Age-1;a++) {
@@ -79,6 +83,7 @@ public class Heredity {
                     newGeneAge.add(newGene);
                 }
                 newGenes.addAll(newGeneAge);
+
             }
             System.out.print("E");
             Collections.sort(genes);
@@ -112,16 +117,8 @@ public class Heredity {
             avg=(double)(Math.round(array[a+1]/N)*100)/100.0;
             System.out.println();
             System.out.println("Age "+(a+1)+" : "+array[a+1]+"& Max : "+max+" | Avg : "+avg+" | Zero : "+zero);
-            boolean same=true;
-            for(int i=0;i<N-1;i++){
-                if(genes.get(i).getGene().equals(genes.get(i+1).getGene())){
-                    same=false;
-                    break;
-                }
-            }
-            if(same) break;
         }
-        genes.get(maxInt).getGene();
+        System.out.println(genes.get(maxInt).getGene());
         genes.get(maxInt).printTable();
     }
 
@@ -129,8 +126,9 @@ public class Heredity {
         if(Math.random()<Pm){
             StringBuilder s = new StringBuilder(gene.getGene());
             StringBuilder newS = new StringBuilder();
+            int mod =(int)(Math.random()*192);
             for(int i=0;i<s.length();i++){
-                if(Math.random()<0.5){
+                if(i==mod){
                     if(s.charAt(i)=='1') newS.append('0');
                     else newS.append('1');
                 }
@@ -161,11 +159,6 @@ public class Heredity {
                     newgene2.append(gene1.toString().charAt(i));
                 }
             }
-            int switchIndex = (int)Math.random()*192;
-            newgene1.append(gene1.subSequence(0,switchIndex));
-            newgene1.append(gene2.subSequence(switchIndex,192));
-            newgene2.append(gene2.subSequence(0,switchIndex));
-            newgene2.append(gene1.subSequence(switchIndex,192));
             geneAge.add(new Gene()); geneAge.get(0).setGene(newgene1);
             geneAge.add(new Gene()); geneAge.get(1).setGene(newgene2);
         }
